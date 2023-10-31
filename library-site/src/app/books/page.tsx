@@ -1,7 +1,8 @@
-'use client';
-//test comit julien lol
+﻿'use client';
+
 import { FC, ReactElement, useEffect } from 'react';
 import { useBooksProviders } from '@/hooks';
+import { MenuHamburger } from '../layout';
 
 const BooksPage: FC = (): ReactElement => {
   const { useListBooks } = useBooksProviders();
