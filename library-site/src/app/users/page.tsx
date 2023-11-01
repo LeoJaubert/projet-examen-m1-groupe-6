@@ -3,10 +3,10 @@
 import { FC } from 'react';
 import { MenuHamburger } from '../layout';
 
-const AuthorsPage: FC = () => (
+const UsersPage: FC = () => (
   <main>
     <MenuHamburger />
   </main>
 );
 
-export default AuthorsPage;
+export default UsersPage;

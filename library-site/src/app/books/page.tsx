@@ -8,10 +8,13 @@ const BooksPage: FC = (): ReactElement => {
   const { useListBooks } = useBooksProviders();
   const { books, load } = useListBooks();
 
-  useEffect(() => load, []);
+  useEffect(() => load, [load]);
 
   return (
     <>
+      <main>
+        <MenuHamburger />
+      </main>
       <h1>Books</h1>
       {books.map((book) => (
         <div key={book.id}>{book.name}</div>

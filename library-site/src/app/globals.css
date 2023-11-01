@@ -1,6 +1,6 @@
-﻿@tailwind base;
-@tailwind components;
-@tailwind utilities;
+﻿@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -26,17 +26,27 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.menu {
+.menu-button {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  left: 215px;
 }
 
 .menu-column {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   width: 200px;
+  height: 250px;
+  color: #000501;
   background-color: #79C7C5;
+  font-size: 25px;
+  padding: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.button-column {
+  display: flex;
+  flex-direction: column;
   padding: 10px;
 }
