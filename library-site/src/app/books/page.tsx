@@ -10,6 +10,10 @@ const BooksPage: FC = (): ReactElement => {
 
   useEffect(() => load, [load]);
 
+  useEffect(() => {
+    document.title = 'Liste des livres';
+  }, []);
+
   return (
     <>
       <main>
