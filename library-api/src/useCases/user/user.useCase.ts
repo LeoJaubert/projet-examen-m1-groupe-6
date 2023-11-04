@@ -4,7 +4,7 @@ import { UserRepository } from 'library-api/src/repositories';
 import {
   UserUseCasesOutput,
   PlainUserUseCasesOutput,
-} from 'library-api/src/useCases/user/user.useCase.type'
+} from 'library-api/src/useCases/user/user.useCase.type';
 
 @Injectable()
 export class UserUseCases {

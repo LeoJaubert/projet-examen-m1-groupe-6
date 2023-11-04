@@ -5,7 +5,7 @@ export type PlainUserModel = {
 
   firstname: string;
   lastname: string;
-}
+};
 
 export type UserModel = {
   id: UserId;
@@ -13,4 +13,4 @@ export type UserModel = {
   firstname: string;
   lastname: string;
   book?: Book;
-}
+};

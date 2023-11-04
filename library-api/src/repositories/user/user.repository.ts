@@ -22,9 +22,7 @@ export class UserRepository extends Repository<User> {
    * @returns Array of plain users
    */
   public async getAllPlain(): Promise<PlainUserRepositoryOutput[]> {
-    const users = await this.find({
-        
-    });
+    const users = await this.find({});
 
     return users.map(adaptUserEntityToPlainUserModel);
   }
