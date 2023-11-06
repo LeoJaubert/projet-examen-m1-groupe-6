@@ -1,17 +1,15 @@
-﻿/* import type { Metadata } from 'next'; */
+﻿'use client';
+
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import * as React from 'react';
 import Image from 'next/image';
 import hamburgericon from './hamburgericon.ico';
+import { Modal } from '../components/modals/Modal';
+import styles from '../components/modals/modal.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
-
-/* export const metadata: Metadata = {
-  title: 'Library',
-  description: 'Book management system',
-}; */
 
 export default function RootLayout({
   children,
@@ -58,3 +56,47 @@ export const MenuHamburger: React.FC = () => (
     />
   </div>
 );
+
+export const AddUser: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (): void => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = (): void => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <div className="adduser-global">
+      <button
+        id="adduser-button"
+        className="block text-noir bg-bleu border-2 hover:bg-bleu border-noir focus:outline-none focus:ring-noir font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        type="button"
+        onClick={openModal}
+      >
+        Ajouter un utilisateur
+      </button>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onCancel={closeModal}
+          onSubmit={closeModal}
+          title="Ajouter un utilisateur"
+        >
+          <div className={styles.form}>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Prénom</p>
+              <input className={styles.input} />
+            </div>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Nom de famille</p>
+              <input className={styles.input} />
+            </div>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
+};
