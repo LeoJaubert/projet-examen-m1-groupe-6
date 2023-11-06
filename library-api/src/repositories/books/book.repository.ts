@@ -7,7 +7,7 @@ import {
   Genre,
   Author,
 } from 'library-api/src/entities';
-import { GenreModel, PlainAuthorModel } from 'library-api/src/models';
+import { GenreModel } from 'library-api/src/models';
 import {
   BookRepositoryOutput,
   PlainBookRepositoryOutput,
@@ -100,16 +100,23 @@ export class BookRepository extends Repository<Book> {
         );
       }
       if (input.author) {
-        // Assuming you have an Author table and you need to associate the book with an author
         const author = await manager.findOne<Author>(Author, {
           where: { lastName: input.author.lastName },
         });
-  
+
         newBook.author = author;
         await manager.save<Book>(newBook);
       }
       return newBook.id;
     });
     return this.getById(id);
+  }
+
+  /**
+   * Delete a book from database
+   * @param id Book's id
+   */
+  public async deletebyid(id: BookId): Promise<void> {
+    await this.delete(id);
   }
 }

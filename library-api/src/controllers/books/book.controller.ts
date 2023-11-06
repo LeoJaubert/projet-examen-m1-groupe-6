@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Delete } from '@nestjs/common';
 import {
   BookPresenter,
   PlainBookPresenter,
@@ -31,5 +31,10 @@ export class BookController {
     const book = await this.bookUseCases.create(input);
 
     return BookPresenter.from(book);
+  }
+
+  @Delete('/:id')
+  public async deleteById(@Param('id') id: BookId): Promise<void> {
+    await this.bookUseCases.deletebyid(id);
   }
 }
