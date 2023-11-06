@@ -1,19 +1,29 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { PlainBookModel } from '@/models';
+import { Console } from 'console';
 
-type UseListBooksProvider = {
+type UseListBooksProvider = 
+{
   books: PlainBookModel[];
   load: () => void;
 };
 
-export const useListBooks = (): UseListBooksProvider => {
+type ListBooksInput = 
+{
+  search?: string
+}
+
+export const useListBooks = (input?: ListBooksInput): UseListBooksProvider => 
+{
   const [books, setBooks] = useState<PlainBookModel[]>([]);
 
-  const fetchBooks = (): void => {
+  const fetchBooks = (): void => 
+  {  
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/books`)
-      .then((data) => setBooks(data.data))
+      .then((data) => setBooks((data.data as PlainBookModel[])
+      .filter((book) => (input?.search ? book.name.toLowerCase().includes(input.search.toLowerCase()) : true))))
       .catch((err) => console.error(err));
   };
 
@@ -21,9 +31,9 @@ export const useListBooks = (): UseListBooksProvider => {
 };
 
 type BookProviders = {
-  useListBooks: () => UseListBooksProvider;
+  useListBooks: (input?: ListBooksInput) => UseListBooksProvider;
 };
 
-export const useBooksProviders = (): BookProviders => ({
+export const useBooksProviders = (input?: ListBooksInput): BookProviders => ({
   useListBooks,
 });
