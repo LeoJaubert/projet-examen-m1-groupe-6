@@ -1,7 +1,8 @@
 import { GenreId } from 'library-api/src/entities';
 import { GenreModel } from 'library-api/src/models';
 
-export class GenrePresenter {
+export class GenrePresenter 
+{
   id: GenreId;
 
   name: string;
@@ -10,7 +11,8 @@ export class GenrePresenter {
     Object.assign(this, data);
   }
 
-  public static from(data: GenreModel): GenrePresenter {
+  public static from(data: GenreModel): GenrePresenter 
+  {
     return new GenrePresenter({
       id: data.id,
       name: data.name,

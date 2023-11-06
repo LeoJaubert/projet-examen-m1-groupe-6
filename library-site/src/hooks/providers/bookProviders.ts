@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PlainBookModel } from '@/models';
+import { useGenresProviders } from '@/hooks';
 import { Console } from 'console';
 
 type UseListBooksProvider = 
@@ -11,7 +12,8 @@ type UseListBooksProvider =
 
 type ListBooksInput = 
 {
-  search?: string
+  search?: string;
+  filterGenres?: string[]
 }
 
 export const useListBooks = (input?: ListBooksInput): UseListBooksProvider => 
@@ -23,7 +25,8 @@ export const useListBooks = (input?: ListBooksInput): UseListBooksProvider =>
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/books`)
       .then((data) => setBooks((data.data as PlainBookModel[])
-      .filter((book) => (input?.search ? book.name.toLowerCase().includes(input.search.toLowerCase()) : true))))
+      .filter((book) => (input?.search ? book.name.toLowerCase().includes(input.search.toLowerCase()) : true))
+      .filter((book) => (input?.filterGenres?.length ? book.genres.some((genre) => input.filterGenres?.includes(genre)): true))))
       .catch((err) => console.error(err));
   };
 
