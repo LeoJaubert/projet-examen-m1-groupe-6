@@ -3,7 +3,8 @@
 import { useParams } from 'next/navigation';
 import { FC } from 'react';
 
-const BooksDetailsPage: FC = () => {
+const BooksDetailsPage: FC = () => 
+{
   const { id } = useParams();
 
   return (
