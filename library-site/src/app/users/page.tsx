@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import { FC, useEffect } from 'react';
-import { MenuHamburger } from '../layout';
+import { MenuHamburger, AddUser } from '../layout';
 
 const UsersPage: FC = () => {
   useEffect(() => {
@@ -11,6 +11,7 @@ const UsersPage: FC = () => {
   return (
     <main>
       <MenuHamburger />
+      <AddUser />
     </main>
   );
 };
