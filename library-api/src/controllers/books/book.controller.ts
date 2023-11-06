@@ -1,10 +1,11 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import {
   BookPresenter,
   PlainBookPresenter,
 } from 'library-api/src/controllers/books/book.presenter';
 import { BookId } from 'library-api/src/entities';
 import { BookUseCases } from 'library-api/src/useCases';
+import { CreateBookDto, validBook } from './book.dto';
 
 @Controller('books')
 export class BookController {
@@ -20,6 +21,14 @@ export class BookController {
   @Get('/:id')
   public async getById(@Param('id') id: BookId): Promise<BookPresenter> {
     const book = await this.bookUseCases.getById(id);
+
+    return BookPresenter.from(book);
+  }
+
+  @Post()
+  public async create(@Body() input: CreateBookDto): Promise<BookPresenter> {
+    validBook(input);
+    const book = await this.bookUseCases.create(input);
 
     return BookPresenter.from(book);
   }
