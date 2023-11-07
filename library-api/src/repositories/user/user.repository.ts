@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { NotFoundError } from 'library-api/src/common/errors';
+import {
+  NotFoundError,
+  InternalServerError,
+} from 'library-api/src/common/errors';
 import { User, UserId } from 'library-api/src/entities';
 import {
   UserRepositoryOutput,
   PlainUserRepositoryOutput,
+  CreateUserRepositoryInput,
 } from 'library-api/src/repositories/user/user.repository.type';
 import {
   adaptUserEntityToUserModel,
@@ -41,5 +45,35 @@ export class UserRepository extends Repository<User> {
     }
 
     return adaptUserEntityToUserModel(user);
+  }
+
+  /**
+   * Create a new User
+   * @Param input Data to create the new user
+   * @returns Created User
+   */
+
+  public async createUser(
+    input: CreateUserRepositoryInput,
+  ): Promise<PlainUserRepositoryOutput> {
+    const id = await this.dataSource.transaction(async (manager) => {
+      const [newUser] = await manager.save<User>([
+        manager.create<User>(User, { ...input }),
+      ]);
+      if (!newUser) {
+        throw new InternalServerError('An error occured creating new User');
+      }
+
+      return newUser.id;
+    });
+    return this.getById(id);
+  }
+
+  /**
+   * Delete an user from database
+   * @param id User's id
+   */
+  public async deletebyid(id: UserId): Promise<void> {
+    await this.delete(id);
   }
 }
