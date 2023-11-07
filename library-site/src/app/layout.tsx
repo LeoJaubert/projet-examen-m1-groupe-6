@@ -143,7 +143,47 @@ export const AddBook: React.FC = () => {
               <input className={styles.input} />
             </div>
             <div className={styles.formPart}>
-              <p className={styles.label}>Date d'écriture</p>
+              <p className={styles.label}>Date d&apos;écriture</p>
+              <input className={styles.input} />
+            </div>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
+};
+
+export const AddAuthor: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (): void => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = (): void => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <div className="add-global">
+      <button
+        id="addbook-button"
+        className="block text-noir bg-bleu border-2 hover:bg-bleu border-noir focus:outline-none focus:ring-noir font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        type="button"
+        onClick={openModal}
+      >
+        Ajouter un auteur
+      </button>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onCancel={closeModal}
+          onSubmit={closeModal}
+          title="Ajouter un auteur"
+        >
+          <div className={styles.form}>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Nom de l&apos;auteur</p>
               <input className={styles.input} />
             </div>
           </div>

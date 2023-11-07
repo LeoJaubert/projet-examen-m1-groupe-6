@@ -2,7 +2,7 @@
 
 import { FC, useEffect } from 'react';
 import { useAuthorsProviders } from '@/hooks';
-import { MenuHamburger } from '../layout';
+import { MenuHamburger, AddAuthor } from '../layout';
 
 const AuthorsPage: FC = () => {
   const { useListAuthors } = useAuthorsProviders();
@@ -17,6 +17,7 @@ const AuthorsPage: FC = () => {
   return (
     <main>
       <MenuHamburger />
+      <AddAuthor />
       <h1>Author</h1>
       {authors.map((author) => (
         <div key={author.id}>{author.firstName}</div>
