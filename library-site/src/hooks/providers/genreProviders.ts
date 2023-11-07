@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { PlainGenreModel } from '@/models';
 
 type UseListGenresProvider = {
-    genres: PlainGenreModel[];
-  load_genre: () => void;
+  genres: PlainGenreModel[];
+  loadGenre: () => void;
 };
 
 export const useListGenres = (): UseListGenresProvider => {
@@ -13,17 +13,16 @@ export const useListGenres = (): UseListGenresProvider => {
   const fetchGenres = (): void => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/genres`)
-      .then((data) => setGenres(data.data))
-      .catch((err) => console.error(err));
+      .then((data) => setGenres(data.data));
   };
 
-  return { genres, load_genre: fetchGenres };
+  return { genres, loadGenre: fetchGenres };
 };
 
 type GenresProviders = {
-    useListGenres: () => UseListGenresProvider;
+  useListGenres: () => UseListGenresProvider;
 };
 
 export const useGenresProviders = (): GenresProviders => ({
-    useListGenres,
+  useListGenres,
 });

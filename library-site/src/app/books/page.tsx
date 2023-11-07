@@ -1,15 +1,15 @@
 ﻿'use client';
 
-import { FC, ReactElement, useEffect, useState } from 'react';
+import React, { FC, ReactElement, useEffect, useState } from 'react';
 import { useBooksProviders, useGenresProviders } from '@/hooks';
 import { MenuHamburger, AddBook } from '../layout';
-import { bookSort } from './bookSort';
+import { bookSortType } from './bookSort';
 
 const BooksPage: FC = (): ReactElement => {
   // Permet d'avoir tous les noms des genres pour le filtrage.
   const { useListGenres } = useGenresProviders();
-  const { genres, load_genre } = useListGenres();
-  useEffect(() => load_genre, [load_genre]);
+  const { genres, loadGenre } = useListGenres();
+  useEffect(() => loadGenre, [loadGenre]);
   const nomsGenres = genres
     .map((genre) => genre.name)
     .filter((value, index, array) => array.indexOf(value) === index);
@@ -22,10 +22,10 @@ const BooksPage: FC = (): ReactElement => {
 
   const [genreSelect, setGenreSelect] = useState<string>(nomsGenres[0]);
 
-  const onSelectGenre = (e: any): void => {
-    e.preventDefault();
+  const onSelectGenre = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    event.preventDefault();
 
-    setGenreSelect(e.target.value);
+    setGenreSelect(event.target.value);
   };
 
   const addGenre = (): void => {
@@ -38,17 +38,23 @@ const BooksPage: FC = (): ReactElement => {
     }
   };
 
+  function compareSort(s1: bookSortType, s2: bookSortType): boolean {
+    if (s1.direction !== s2.direction) return false;
+    if (s1.field !== s2.field) return false;
+    return true;
+  }
+
   const removeGenre = (type: string): void => {
     setFilterGenres(filterGenres.filter((filterType) => filterType !== type));
   };
 
   // Code pour le tri
-  const [bookSort, setBookSort] = useState<bookSort>({
+  const [bookSort, setBookSort] = useState<bookSortType>({
     field: 'id',
     direction: 'asc',
   });
 
-  const bookSorts: bookSort[] = [
+  const bookSorts: bookSortType[] = [
     { field: 'id', direction: 'asc' },
     { field: 'id', direction: 'desc' },
     { field: 'name', direction: 'asc' },
@@ -61,11 +67,7 @@ const BooksPage: FC = (): ReactElement => {
     { field: 'authorLastName', direction: 'desc' },
   ];
 
-  const { useListBooks } = useBooksProviders({
-    search,
-    filterGenres,
-    bookSort,
-  });
+  const { useListBooks } = useBooksProviders();
   const { books, load } = useListBooks({ search, filterGenres, bookSort });
 
   useEffect(() => load, [load]);
@@ -83,7 +85,7 @@ const BooksPage: FC = (): ReactElement => {
       <input
         type="text"
         value={search}
-        onChange={(e: any) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           e.preventDefault();
           setSearch(e.target.value);
         }}
@@ -92,15 +94,10 @@ const BooksPage: FC = (): ReactElement => {
         <button
           key={currentSort.field + currentSort.direction}
           type="button"
-          onClick={() => setBookSort(currentSort)}
-          disabled={
-            bookSort.direction === currentSort.direction
-            && bookSort.field === currentSort.field
-          }
+          onClick={(): void => setBookSort(currentSort)}
+          disabled={compareSort(currentSort, bookSort)}
         >
-          {currentSort.field}
-          {' '}
-          {currentSort.direction}
+          {`${currentSort.field} ${currentSort.direction}`}
         </button>
       ))}
       <br />
@@ -114,7 +111,7 @@ const BooksPage: FC = (): ReactElement => {
       </button>
       <br />
       {nomsGenres.map((type) => (
-        <button type="button" onClick={() => removeGenre(type)}>
+        <button type="button" onClick={(): void => removeGenre(type)}>
           {type}
           {'           '}
         </button>
@@ -122,17 +119,9 @@ const BooksPage: FC = (): ReactElement => {
       <h1>Books</h1>
       {books.map((book) => (
         <div key={book.id}>
-          Titre:
-          {book.name}
-, auteur:
-          {book.author.firstName} {book.author.lastName}
-          genres:
-          {book.genres}
+          {`Titre: ${book.name}, auteur: ${book.author.firstName} ${book.author.lastName}, genres: ${book.genres}`}
         </div>
       ))}
-      <div>
-        {bookSort.field} {bookSort.direction}
-      </div>
     </>
   );
 };
