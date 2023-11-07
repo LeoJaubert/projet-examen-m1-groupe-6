@@ -69,10 +69,10 @@ export const AddUser: React.FC = () => {
   };
 
   return (
-    <div className="adduser-global">
+    <div className="add-global">
       <button
         id="adduser-button"
-        className="block text-noir bg-bleu border-2 hover:bg-bleu border-noir focus:outline-none focus:ring-noir font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className="block text-noir bg-bleu border-2 hover:bg-bleu border-noir focus:outline-none focus:ring-noir font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button"
         onClick={openModal}
       >
@@ -92,6 +92,58 @@ export const AddUser: React.FC = () => {
             </div>
             <div className={styles.formPart}>
               <p className={styles.label}>Nom de famille</p>
+              <input className={styles.input} />
+            </div>
+          </div>
+        </Modal>
+      )}
+    </div>
+  );
+};
+
+export const AddBook: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (): void => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = (): void => {
+    setIsModalOpen(false);
+  };
+
+  return (
+    <div className="add-global">
+      <button
+        id="addbook-button"
+        className="block text-noir bg-bleu border-2 hover:bg-bleu border-noir focus:outline-none focus:ring-noir font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        type="button"
+        onClick={openModal}
+      >
+        Ajouter un livre
+      </button>
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onCancel={closeModal}
+          onSubmit={closeModal}
+          title="Ajouter un livre"
+        >
+          <div className={styles.form}>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Nom du livre</p>
+              <input className={styles.input} />
+            </div>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Auteur</p>
+              <input className={styles.input} />
+            </div>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Genre(s)</p>
+              <input className={styles.input} />
+            </div>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Date d'écriture</p>
               <input className={styles.input} />
             </div>
           </div>
