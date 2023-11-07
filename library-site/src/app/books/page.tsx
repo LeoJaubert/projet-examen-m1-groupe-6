@@ -3,6 +3,7 @@
 import { FC, ReactElement, useEffect, useState } from 'react';
 import { useBooksProviders, useGenresProviders } from '@/hooks';
 import { MenuHamburger } from '../layout';
+import { bookSort } from './bookSort';
 
 const BooksPage: FC = (): ReactElement => 
 {
@@ -36,8 +37,24 @@ const BooksPage: FC = (): ReactElement =>
     setFilterGenres(filterGenres.filter((filterType) => filterType !== type));
   };
 
-  const { useListBooks } = useBooksProviders({ search, filterGenres });
-  const { books, load } = useListBooks({ search, filterGenres });
+  // Code pour le tri
+  const [bookSort, setBookSort] = useState<bookSort>({ field: 'id', direction: 'asc' });
+
+  const bookSorts: bookSort[] = [
+    { field: 'id', direction: 'asc' },
+    { field: 'id', direction: 'desc' },
+    { field: 'name', direction: 'asc' },
+    { field: 'name', direction: 'desc' },
+    { field: 'authorID', direction: 'asc' },
+    { field: 'authorID', direction: 'desc' },
+    { field: 'authorFirstName', direction: 'asc' },
+    { field: 'authorFirstName', direction: 'desc' },
+    { field: 'authorLastName', direction: 'asc' },
+    { field: 'authorLastName', direction: 'desc' },
+  ];
+
+  const { useListBooks } = useBooksProviders({ search, filterGenres, bookSort });
+  const { books, load } = useListBooks({ search, filterGenres, bookSort });
 
   useEffect(() => load, [load]);
 
@@ -51,6 +68,13 @@ const BooksPage: FC = (): ReactElement =>
         <MenuHamburger />
       </main>
       <input type="text" value={search} onChange={(e: any) => { e.preventDefault(); setSearch(e.target.value); }} />
+      {bookSorts.map((currentSort) => (
+        <button key={currentSort.field+currentSort.direction} type="button" onClick={() => setBookSort(currentSort)} disabled={bookSort.direction === currentSort.direction && bookSort.field === currentSort.field}>
+          {currentSort.field}
+          {' '}
+          {currentSort.direction}
+        </button>
+      ))}
       <br />
       <select onChange={onSelectGenre}>
         {nomsGenres.map((genre) => <option value={genre}>{genre}</option>)}
@@ -64,6 +88,7 @@ const BooksPage: FC = (): ReactElement =>
       {books.map((book) => (
         <div key={book.id}>Titre: {book.name}, auteur: {book.author.firstName} {book.author.lastName}, genres: {book.genres}</div>
       ))}
+      <div>{bookSort.field} {bookSort.direction}</div>
     </>
   );
 };
