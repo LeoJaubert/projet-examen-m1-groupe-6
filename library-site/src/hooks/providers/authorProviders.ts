@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { PlainAuthorModel } from '@/models';
 
 type UseListAuthorsProvider = {
-    authors: PlainAuthorModel[];
+  authors: PlainAuthorModel[];
   load: () => void;
 };
 
@@ -21,9 +21,9 @@ export const useListAuthors = (): UseListAuthorsProvider => {
 };
 
 type AuthorsProviders = {
-    useListAuthors: () => UseListAuthorsProvider;
+  useListAuthors: () => UseListAuthorsProvider;
 };
 
 export const useAuthorsProviders = (): AuthorsProviders => ({
-    useListAuthors,
+  useListAuthors,
 });
