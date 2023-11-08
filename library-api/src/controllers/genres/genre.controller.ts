@@ -1,20 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { GenreId } from 'library-api/src/entities';
 import { GenreUseCases } from 'library-api/src/useCases';
-import {
-    GenrePresenter
-  } from 'library-api/src/controllers/genres/genre.presenter';
+import { GenrePresenter } from 'library-api/src/controllers/genres/genre.presenter';
 
 @Controller('genres')
-export class GenreController 
-{
-    constructor(private readonly GenreUseCases: GenreUseCases) {}
+export class GenreController {
+  constructor(private readonly GenreUseCase: GenreUseCases) {}
 
-    @Get('/')
-    public async getAll(): Promise<GenrePresenter[]> 
-    {
-      const authors = await this.GenreUseCases.getAllPlain();
-  
-      return authors.map(GenrePresenter.from);
-    }
+  @Get('/')
+  public async getAll(): Promise<GenrePresenter[]> {
+    const authors = await this.GenreUseCase.getAllPlain();
+
+    return authors.map(GenrePresenter.from);
+  }
 }

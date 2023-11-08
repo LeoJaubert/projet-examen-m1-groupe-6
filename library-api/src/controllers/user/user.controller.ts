@@ -5,7 +5,7 @@ import {
 } from 'library-api/src/controllers/user/user.presenter';
 import { UserId } from 'library-api/src/entities';
 import { UserUseCases } from 'library-api/src/useCases';
-import { CreateUserDto, validUser } from './user.dto';
+import { CreateUserDto } from './user.dto';
 
 @Controller('user')
 export class UserController {
@@ -29,7 +29,6 @@ export class UserController {
   public async create(
     @Body() input: CreateUserDto,
   ): Promise<PlainUserPresenter> {
-    validUser(input);
     const user = await this.userUseCases.create(input);
 
     return PlainUserPresenter.from(user);

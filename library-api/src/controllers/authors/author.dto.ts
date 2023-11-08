@@ -1,15 +1,9 @@
+import { IsString } from '@nestjs/class-validator';
+
 export class CreateAuthorDto {
+  @IsString()
   firstName: string;
 
+  @IsString()
   lastName: string;
-}
-
-export function isString(data: any): boolean {
-  return typeof data === 'string';
-}
-
-export function validAuthor(input: CreateAuthorDto): void {
-  if (!isString(input.firstName) || !isString(input.lastName)) {
-    throw new Error('Author not valid');
-  }
 }
