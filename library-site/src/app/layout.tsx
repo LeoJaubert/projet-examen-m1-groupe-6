@@ -1,5 +1,6 @@
 ﻿'use client';
 
+import axios from 'axios';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { ReactElement, ReactNode, useState } from 'react';
@@ -67,6 +68,26 @@ export const AddUser: React.FC = () => {
   const closeModal = (): void => {
     setIsModalOpen(false);
   };
+  const [firstname, setfirstname] = useState('');
+  const [lastname, setlastname] = useState('');
+
+  const handlefirstnameChange = (event) => {
+    setfirstname(event.target.value);
+  };
+
+  const handlelastnameChange = (event) => {
+    setlastname(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    const newUser = {
+      firstname,
+      lastname,
+    };
+
+    const response = await axios.post('http://localhost:3001/user', newUser);
+    closeModal
+  };
 
   return (
     <div className="add-global">
@@ -82,17 +103,25 @@ export const AddUser: React.FC = () => {
         <Modal
           isOpen={isModalOpen}
           onCancel={closeModal}
-          onSubmit={closeModal}
+          onChange={(handlefirstnameChange, handlelastnameChange)}
+          onSubmit={handleSubmit}
           title="Ajouter un utilisateur"
         >
           <div className={styles.form}>
             <div className={styles.formPart}>
               <p className={styles.label}>Prénom</p>
-              <input className={styles.input} />
+              <input className={styles.input} 
+                value={firstname}
+                onChange={handlefirstnameChange}
+              />
             </div>
             <div className={styles.formPart}>
               <p className={styles.label}>Nom de famille</p>
-              <input className={styles.input} />
+              <input
+                className={styles.input}
+                value={lastname}
+                onChange={handlelastnameChange}
+              />
             </div>
           </div>
         </Modal>
@@ -163,7 +192,31 @@ export const AddAuthor: React.FC = () => {
   const closeModal = (): void => {
     setIsModalOpen(false);
   };
+const [firstName, setfirstName] = useState('');
+const [lastName, setlastName] = useState('');
+const [photoUrl, setphotoUrl] = useState('');
 
+const handlefirstNameChange = (event) => {
+  setfirstName(event.target.value);
+};
+
+const handlelastNameChange = (event) => {
+  setlastName(event.target.value);
+};
+
+const handlephotoUrlChange = (event) => {
+  setphotoUrl(event.target.value);
+};
+
+const handleSubmit = async () => {
+  const newAuthor = {
+    firstName,
+    lastName,
+    photoUrl,};
+  
+
+  const response = await axios.post('http://localhost:3001/authors', newAuthor);
+    closeModal};
   return (
     <div className="add-global">
       <button
@@ -178,14 +231,35 @@ export const AddAuthor: React.FC = () => {
         <Modal
           isOpen={isModalOpen}
           onCancel={closeModal}
-          onSubmit={closeModal}
+          onChange={(handlefirstNameChange, handlelastNameChange, handlephotoUrlChange)}
+          onSubmit={handleSubmit}
           title="Ajouter un auteur"
         >
           <div className={styles.form}>
             <div className={styles.formPart}>
-              <p className={styles.label}>Nom de l&apos;auteur</p>
-              <input className={styles.input} />
+              <p className={styles.label}>Nom de l&apos;prénom</p>
+              <input className={styles.input}
+              value={firstName}
+              onChange={handlefirstNameChange} />
+              
             </div>
+            <div className={styles.form}>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Nom de famille</p>
+              <input className={styles.input} 
+                value={lastName}
+                onChange={handlelastNameChange}
+              />
+            </div>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Url de la photo</p>
+              <input
+                className={styles.input}
+                value={photoUrl}
+                onChange={handlephotoUrlChange}
+              />
+            </div>
+          </div>
           </div>
         </Modal>
       )}

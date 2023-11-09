@@ -20,7 +20,9 @@ const AuthorsPage: FC = () => {
       <AddAuthor />
       <h1>Author</h1>
       {authors.map((author) => (
-        <div key={author.id}>{author.firstName}</div>
+        <div key={author.id}>
+          {author.firstName} {author.lastName}
+        </div>
       ))}
     </main>
   );
