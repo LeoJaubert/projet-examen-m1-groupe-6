@@ -7,13 +7,26 @@ type UseListUsersProvider = {
   load: () => void;
 };
 
-export const useListUsers = (): UseListUsersProvider => {
+type ListUsersInput = {
+  search?: string;
+};
+
+export const useListUsers = (input?: ListUsersInput): UseListUsersProvider => {
   const [users, setUsers] = useState<PlainUserModel[]>([]);
+
+  function setAxiosData(userData: PlainUserModel[]): void {
+    const filteredUserData0 = userData.filter((user) => {
+      if (!input?.search) return true;
+      return user.lastname.toLowerCase().includes(input.search.toLowerCase());
+    });
+
+    setUsers(filteredUserData0);
+  }
 
   const fetchUsers = (): void => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL}/user`)
-      .then((data) => setUsers(data.data))
+      .then((data) => setAxiosData(data.data as PlainUserModel[]))
       .catch((err) => console.error(err));
   };
 
@@ -21,7 +34,7 @@ export const useListUsers = (): UseListUsersProvider => {
 };
 
 type UsersProviders = {
-  useListUsers: () => UseListUsersProvider;
+  useListUsers: (input?: ListUsersInput) => UseListUsersProvider;
 };
 
 export const useUsersProviders = (): UsersProviders => ({
