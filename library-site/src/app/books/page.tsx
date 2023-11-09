@@ -50,21 +50,17 @@ const BooksPage: FC = (): ReactElement => {
 
   // Code pour le tri
   const [bookSort, setBookSort] = useState<bookSortType>({
-    field: 'id',
-    direction: 'asc',
+    field: 'Nom:',
+    direction: 'A->Z',
   });
 
   const bookSorts: bookSortType[] = [
-    { field: 'id', direction: 'asc' },
-    { field: 'id', direction: 'desc' },
-    { field: 'name', direction: 'asc' },
-    { field: 'name', direction: 'desc' },
-    { field: 'authorID', direction: 'asc' },
-    { field: 'authorID', direction: 'desc' },
-    { field: 'authorFirstName', direction: 'asc' },
-    { field: 'authorFirstName', direction: 'desc' },
-    { field: 'authorLastName', direction: 'asc' },
-    { field: 'authorLastName', direction: 'desc' },
+    { field: 'Nom:', direction: 'A->Z' },
+    { field: 'Nom:', direction: 'Z->A' },
+    { field: 'Prénom auteur:', direction: 'A->Z' },
+    { field: 'Prénom auteur:', direction: 'Z->A' },
+    { field: 'Nom auteur:', direction: 'A->Z' },
+    { field: 'Nom auteur:', direction: 'Z->A' },
   ];
 
   const { useListBooks } = useBooksProviders();
@@ -77,52 +73,94 @@ const BooksPage: FC = (): ReactElement => {
   }, []);
 
   return (
-    <>
-      <main>
+    <main>
+      <div className="flex justify-between items-center bg-gray-700 text-white p-4">
         <MenuHamburger />
         <AddBook />
-      </main>
-      <input
-        type="text"
-        value={search}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          e.preventDefault();
-          setSearch(e.target.value);
-        }}
-      />
-      {bookSorts.map((currentSort) => (
-        <button
-          key={currentSort.field + currentSort.direction}
-          type="button"
-          onClick={(): void => setBookSort(currentSort)}
-          disabled={compareSort(currentSort, bookSort)}
+      </div>
+      <div className="p-4 space-x-4">
+        <input
+          type="text"
+          value={search}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            e.preventDefault();
+            setSearch(e.target.value);
+          }}
+          placeholder="Rechercher un livre"
+          className="p-2 border border-gray-300 rounded-md"
+        />
+        <select
+          onChange={onSelectGenre}
+          className="p-2 border border-gray-300 rounded-md ml-4"
         >
-          {`${currentSort.field} ${currentSort.direction}`}
+          {nomsGenres.map((genre) => (
+            <option value={genre} key={genre}>
+              {genre}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          onClick={addGenre}
+          className="bg-bleu text-white px-4 py-2 rounded-md ml-2 border-2 border-noir"
+        >
+          Filtrer
         </button>
-      ))}
-      <br />
-      <select onChange={onSelectGenre}>
-        {nomsGenres.map((genre) => (
-          <option value={genre}>{genre}</option>
-        ))}
-      </select>
-      <button type="button" onClick={addGenre}>
-        Add filter
-      </button>
-      <br />
-      {nomsGenres.map((type) => (
-        <button type="button" onClick={(): void => removeGenre(type)}>
-          {type}
-          {'           '}
-        </button>
-      ))}
-      <h1>Books</h1>
-      {books.map((book) => (
-        <div key={book.id}>
-          {`Titre: ${book.name}, auteur: ${book.author.firstName} ${book.author.lastName}, genres: ${book.genres}`}
+        <div className="mt-4 space-x-2">
+          {filterGenres.map((type) => (
+            <button
+              key={type}
+              onClick={(): void => removeGenre(type)}
+              className="bg-gray-300 text-gray-700 px-3 py-1 rounded-full"
+              type="button"
+            >
+              {type}
+              {' '}
+              <span className="text-xs">X</span>
+            </button>
+          ))}
         </div>
-      ))}
-    </>
+        {bookSorts.map((currentSort) => (
+          <button
+            key={currentSort.field + currentSort.direction}
+            type="button"
+            onClick={(): void => setBookSort(currentSort)}
+            disabled={compareSort(currentSort, bookSort)}
+            className={`bg-gray-300 text-gray-700 px-3 py-1 rounded-md mt-4 ${
+              compareSort(currentSort, bookSort)
+                ? 'opacity-50 cursor-not-allowed'
+                : ''
+            }`}
+          >
+            {`${currentSort.field} ${currentSort.direction}`}
+          </button>
+        ))}
+      </div>
+      <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Livres :</h1>
+        {books.map((book) => (
+          <div key={book.id} className="bg-vertclair p-4 rounded-md shadow-md mb-4">
+            <p>
+              <strong>Titre:</strong>
+              {' '}
+              {book.name}
+              {' '}
+              <br />
+              <strong>Auteur:</strong>
+              {' '}
+              {book.author.firstName}
+              {' '}
+              {book.author.lastName}
+              {' '}
+              <br />
+              <strong>Genre(s):</strong>
+              {' '}
+              {book.genres.join(', ')}
+            </p>
+          </div>
+        ))}
+      </div>
+    </main>
   );
 };
 

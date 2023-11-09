@@ -1,4 +1,4 @@
 export type bookSortType = {
-  field: 'name' | 'id' | 'authorID' | 'authorFirstName' | 'authorLastName';
-  direction: 'asc' | 'desc';
+  field: 'Nom:' | 'Prénom auteur:' | 'Nom auteur:';
+  direction: 'A->Z' | 'Z->A';
 };

@@ -23,27 +23,17 @@ export const useListBooks = (input?: ListBooksInput): UseListBooksProvider => {
       let val2;
 
       switch (input?.bookSort?.field) {
-        case 'id':
-          val1 = b1.id;
-          val2 = b2.id;
-          break;
-
-        case 'name':
+        case 'Nom:':
           val1 = b1.name;
           val2 = b2.name;
           break;
 
-        case 'authorID':
-          val1 = b1.author.id;
-          val2 = b2.author.id;
-          break;
-
-        case 'authorFirstName':
+        case 'Prénom auteur:':
           val1 = b1.author.firstName;
           val2 = b2.author.lastName;
           break;
 
-        case 'authorLastName':
+        case 'Nom auteur:':
           val1 = b1.author.firstName;
           val2 = b2.author.lastName;
           break;
@@ -52,7 +42,7 @@ export const useListBooks = (input?: ListBooksInput): UseListBooksProvider => {
           return 0;
       }
 
-      if (input?.bookSort?.direction === 'asc') {
+      if (input?.bookSort?.direction === 'A->Z') {
         return val1.localeCompare(val2);
       }
 
