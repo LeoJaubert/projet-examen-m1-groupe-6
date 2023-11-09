@@ -17,24 +17,32 @@ const UsersPage: FC = () => {
   }, []);
 
   return (
-    <main>
+    <main className="p-4">
       <MenuHamburger />
       <AddUser />
-      <input
-        type="text"
-        value={search}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          e.preventDefault();
-          setSearch(e.target.value);
-        }}
-      />
-      <h1>Users</h1>
-      {users.map((user) => (
-        <div key={user.id}>
-          {`${user.firstname} 
-          ${user.lastname}`}
-        </div>
-      ))}
+      <div className="mt-10">
+        <input
+          type="text"
+          value={search}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setSearch(e.target.value);
+          }}
+          placeholder="Rechercher un utilisateur"
+          className="p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <h1 className="text-2xl font-bold mt-8 mb-4">Utilisateurs :</h1>
+      <div className="grid grid-cols-1 gap-4">
+        {users.map((user) => (
+          <div key={user.id} className="bg-vertclair p-4 rounded-md shadow-md">
+            <p className="text-lg font-semibold">
+              {user.firstname}
+              {' '}
+              {user.lastname}
+            </p>
+          </div>
+        ))}
+      </div>
     </main>
   );
 };
