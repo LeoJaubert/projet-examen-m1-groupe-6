@@ -5,7 +5,7 @@ import {
   UserUseCasesOutput,
   PlainUserUseCasesOutput,
   CreateUserUseCasesInput,
-} from 'library-api/src/useCases/user/user.useCase.type';
+} from 'library-api/src/useCases/user/user.useCases.type';
 
 @Injectable()
 export class UserUseCases {

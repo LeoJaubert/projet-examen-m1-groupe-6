@@ -1,7 +1,7 @@
 import { userFixture } from 'library-api/src/fixtures';
 import { UserRepository } from 'library-api/src/repositories';
 import { adaptUserEntityToPlainUserModel } from 'library-api/src/repositories/user/user.utils';
-import { UserUseCases } from './user.useCase';
+import { UserUseCases } from './user.useCases';
 
 describe('UserUseCases', () => {
   describe('getAllPlain', () => {
