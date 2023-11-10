@@ -102,7 +102,7 @@ const BooksPage: FC = (): ReactElement => {
         <button
           type="button"
           onClick={addGenre}
-          className="bg-bleu text-white px-4 py-2 rounded-md ml-2 border-2 border-noir"
+          className="bg-bleu text-black px-4 py-2 rounded-md ml-2 border-2 border-noir font-medium"
         >
           Filtrer
         </button>

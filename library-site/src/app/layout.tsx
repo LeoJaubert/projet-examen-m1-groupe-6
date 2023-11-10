@@ -237,7 +237,7 @@ const handleSubmit = async () => {
         >
           <div className={styles.form}>
             <div className={styles.formPart}>
-              <p className={styles.label}>Nom de l&apos;prénom</p>
+              <p className={styles.label}>Prénom</p>
               <input className={styles.input}
               value={firstName}
               onChange={handlefirstNameChange} />
