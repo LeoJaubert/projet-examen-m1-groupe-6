@@ -22,11 +22,7 @@ export class AuthorRepository extends Repository<Author> {
    * @returns Array of plain authors
    */
   public async getAllPlain(): Promise<PlainAuthorRepositoryOutput[]> {
-    const authors = await this.find({
-      relations: {
-        books: true,
-      },
-    });
+    const authors = await this.find({});
 
     return authors.map(adaptAuthorEntityToPlainAuthorModel);
   }

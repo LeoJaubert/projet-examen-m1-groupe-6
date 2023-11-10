@@ -1,9 +1,12 @@
-import { PlainAuthorModel } from './author.model';
+import { PlainAuthorModel } from '.';
 
-export type PlainBookModel = {
+export * from './author.model';
+
+export type PlainBookModel = 
+{
   id: string;
   name: string;
   genres: string[];
-  writtenOn: Date;
+  writtenOn: Date,
   author: PlainAuthorModel;
 };

@@ -9,8 +9,6 @@ type UseListAuthorsProvider = {
 
 type ListAuthorsInput = {
   search?: string;
-  isFiltreOn?: boolean;
-  filterNb?: number;
 };
 
 export const useListAuthors = (
@@ -24,12 +22,7 @@ export const useListAuthors = (
       return author.lastName.toLowerCase().includes(input.search.toLowerCase());
     });
 
-    const filteredAuthorData1 = filteredAuthorData0.filter((author) => {
-      if (!input?.isFiltreOn) return true;
-      return author.books.length === input?.filterNb;
-    });
-
-    setAuthors(filteredAuthorData1);
+    setAuthors(filteredAuthorData0);
   }
 
   const fetchAuthors = (): void => {

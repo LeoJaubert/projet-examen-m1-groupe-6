@@ -6,7 +6,7 @@ import { CreateAuthorDto } from './author.dto';
 
 @Controller('authors')
 export class AuthorController {
-  constructor(private readonly authorUseCases: AuthorUseCases) {}
+  constructor(private readonly authorUseCases: AuthorUseCases){}
 
   @Get('/')
   public async getAll(): Promise<PlainAuthorPresenter[]> {
