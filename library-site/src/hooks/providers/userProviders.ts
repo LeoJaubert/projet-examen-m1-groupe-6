@@ -9,6 +9,7 @@ type UseListUsersProvider = {
 
 type ListUsersInput = {
   search?: string;
+  filterTitres?: string[];
 };
 
 export const useListUsers = (input?: ListUsersInput): UseListUsersProvider => {
@@ -20,7 +21,12 @@ export const useListUsers = (input?: ListUsersInput): UseListUsersProvider => {
       return user.lastname.toLowerCase().includes(input.search.toLowerCase());
     });
 
-    setUsers(filteredUserData0);
+    const filteredUserData1 = filteredUserData0.filter((user) => {
+      if (!input?.filterTitres?.length) return true;
+      return user.books.some((genre) => input.filterTitres?.includes(genre));
+    });
+
+    setUsers(filteredUserData1);
   }
 
   const fetchUsers = (): void => {

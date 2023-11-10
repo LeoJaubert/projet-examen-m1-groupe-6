@@ -1,15 +1,48 @@
 ﻿'use client';
 
 import React, { FC, useState, useEffect } from 'react';
-import { useUsersProviders } from '@/hooks';
+import { useUsersProviders, useBooksProviders } from '@/hooks';
 import { MenuHamburger, AddUser } from '../layout';
 
 const UsersPage: FC = () => {
+  // Filtre des utilisateurs par livre possédé
+  const { useListBooks } = useBooksProviders();
+  const { books, loadBooks } = useListBooks();
+  useEffect(() => loadBooks, [loadBooks]);
+  const titresLivres = books
+    .map((book) => book.name)
+    .filter((value, index, array) => array.indexOf(value) === index);
+
+  // Code pour le filtre par genre
+  const [filterTitres, setFilterTitres] = useState<string[]>([]);
+
+  const [genreSelect, setGenreSelect] = useState<string>(titresLivres[0]);
+
+  const onSelectTitre = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    event.preventDefault();
+
+    setGenreSelect(event.target.value);
+  };
+
+  const addTitre = (): void => {
+    if (genreSelect) {
+      setFilterTitres(
+        [...filterTitres, genreSelect].filter(
+          (value, index, array) => array.indexOf(value) === index,
+        ),
+      );
+    }
+  };
+
+  const removeTitre = (type: string): void => {
+    setFilterTitres(filterTitres.filter((filterType) => filterType !== type));
+  };
+
   // Filtre par nom de livre
   const [search, setSearch] = useState('');
 
   const { useListUsers } = useUsersProviders();
-  const { users, load } = useListUsers({ search });
+  const { users, load } = useListUsers({ search, filterTitres });
 
   useEffect(() => load, [load]);
   useEffect(() => {
@@ -30,6 +63,36 @@ const UsersPage: FC = () => {
           placeholder="Rechercher un utilisateur"
           className="p-2 border border-gray-300 rounded-md"
         />
+        <select
+          onChange={onSelectTitre}
+          className="p-2 border border-gray-300 rounded-md ml-4"
+        >
+          {titresLivres.map((titre) => (
+            <option value={titre} key={titre}>
+              {titre}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          onClick={addTitre}
+          className="bg-bleu text-black px-4 py-2 rounded-md ml-2 border-2 border-noir font-medium"
+        >
+          Filtrer
+        </button>
+        <div className="mt-4 space-x-2">
+          {filterTitres.map((titre) => (
+            <button
+              key={titre}
+              onClick={(): void => removeTitre(titre)}
+              className="bg-gray-300 text-gray-700 px-3 py-1 rounded-full"
+              type="button"
+            >
+              {`${titre} `}
+              <span className="text-xs">X</span>
+            </button>
+          ))}
+        </div>
       </div>
       <h1 className="text-2xl font-bold mt-8 mb-4">Utilisateurs :</h1>
       <div className="grid grid-cols-1 gap-4">

@@ -5,7 +5,7 @@ import { bookSortType } from '@/app/books/bookSort';
 
 type UseListBooksProvider = {
   books: PlainBookModel[];
-  load: () => void;
+  loadBooks: () => void;
 };
 
 type ListBooksInput = {
@@ -68,7 +68,7 @@ export const useListBooks = (input?: ListBooksInput): UseListBooksProvider => {
       .then((data) => setAxiosData(data.data as PlainBookModel[]));
   };
 
-  return { books, load: fetchBooks };
+  return { books, loadBooks: fetchBooks };
 };
 
 type BookProviders = {
