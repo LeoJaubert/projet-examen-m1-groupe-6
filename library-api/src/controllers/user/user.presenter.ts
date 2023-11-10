@@ -6,9 +6,9 @@ export class PlainUserPresenter {
 
   firstname: string;
 
-  lastname:string
+  lastname: string;
 
-  
+  books: string[];
 
   private constructor(data: PlainUserPresenter) {
     Object.assign(this, data);
@@ -19,7 +19,7 @@ export class PlainUserPresenter {
       id: data.id,
       firstname: data.firstname,
       lastname: data.lastname,
-      
+      books: data.books,
     });
   }
 }
@@ -31,9 +31,7 @@ export class UserPresenter {
 
   lastname: string;
 
-  book?: Book;
-
-
+  books: string[];
 
   private constructor(data: UserPresenter) {
     Object.assign(this, data);
@@ -44,8 +42,7 @@ export class UserPresenter {
       id: data.id,
       firstname: data.firstname,
       lastname: data.lastname,
-      book: data.book
-      
+      books: data.books.map((book) => book.name),
     });
   }
 }

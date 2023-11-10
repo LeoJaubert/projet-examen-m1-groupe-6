@@ -26,12 +26,10 @@ export class UserController {
   }
 
   @Post()
-  public async create(
-    @Body() input: CreateUserDto,
-  ): Promise<PlainUserPresenter> {
+  public async create(@Body() input: CreateUserDto): Promise<UserPresenter> {
     const user = await this.userUseCases.create(input);
 
-    return PlainUserPresenter.from(user);
+    return UserPresenter.from(user);
   }
 
   @Delete('/:id')

@@ -8,10 +8,12 @@ export const adaptUserEntityToPlainUserModel = (
   user: User,
 ): PlainUserRepositoryOutput => ({
   ...user,
+  books: user.userBooks.map((userBook) => userBook.book.name),
 });
 
 export const adaptUserEntityToUserModel = (
   user: User,
 ): UserRepositoryOutput => ({
   ...user,
+  books: user.userBooks.map((userBook) => userBook.book),
 });

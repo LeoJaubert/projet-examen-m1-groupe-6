@@ -1,10 +1,11 @@
-import { UserId, Book } from 'library-api/src/entities';
+import { UserId } from 'library-api/src/entities';
+import { BookModel } from 'library-api/src/models/book.model';
 
 export type PlainUserModel = {
   id: UserId;
-
   firstname: string;
   lastname: string;
+  books: string[];
 };
 
 export type UserModel = {
@@ -12,5 +13,5 @@ export type UserModel = {
 
   firstname: string;
   lastname: string;
-  book?: Book;
+  books: BookModel[];
 };
