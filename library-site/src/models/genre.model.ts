@@ -1,5 +1,4 @@
-export type PlainGenreModel = 
-{
-    id: string;
-    name: string;
+export type PlainGenreModel = {
+  id: string;
+  name: string;
 };
