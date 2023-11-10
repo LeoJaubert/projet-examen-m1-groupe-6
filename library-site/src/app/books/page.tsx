@@ -38,12 +38,6 @@ const BooksPage: FC = (): ReactElement => {
     }
   };
 
-  function compareSort(s1: bookSortType, s2: bookSortType): boolean {
-    if (s1.direction !== s2.direction) return false;
-    if (s1.field !== s2.field) return false;
-    return true;
-  }
-
   const removeGenre = (type: string): void => {
     setFilterGenres(filterGenres.filter((filterType) => filterType !== type));
   };
@@ -63,10 +57,16 @@ const BooksPage: FC = (): ReactElement => {
     { field: 'Nom auteur:', direction: 'Z->A' },
   ];
 
-  const { useListBooks } = useBooksProviders();
-  const { books, load } = useListBooks({ search, filterGenres, bookSort });
+  function compareSort(s1: bookSortType, s2: bookSortType): boolean {
+    if (s1.direction !== s2.direction) return false;
+    if (s1.field !== s2.field) return false;
+    return true;
+  }
 
-  useEffect(() => load, [load]);
+  const { useListBooks } = useBooksProviders();
+  const { books, loadBooks } = useListBooks({ search, filterGenres, bookSort });
+
+  useEffect(() => loadBooks, [loadBooks]);
 
   useEffect(() => {
     document.title = 'Liste des livres';
