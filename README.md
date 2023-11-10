@@ -7,8 +7,6 @@ Notre objectif est de créer un site permettant à des utilisateurs de lister le
 ## Build Status
 Last update: 9/11
 
-Impossibilité d'accéder aux pages de détails individuelles des auteurs, livres et utilisateurs.
-Pas de photos ni de nombre de livres écrits pour les auteurs 
 
 ## Conception
 On commence par la création d'une base de données en back-end afin d'avoir des listes d'auteurs, d'utilisateurs, de livres et de genres de livres. 
@@ -16,11 +14,12 @@ En même temps, un premier design de site et de menu hamburger sont créés pour
 
 Dans un second temps, le back-end a été lié au front-end pour permettre d'afficher les utilisateurs/auteurs/livres pendant que des routes fûrent créées pour ajouter ou supprimer des auteurs/utilisateurs/livres dans les fichiers en back-end.
 Des modales ont été ajoutées à la suite pour permettre la fonctionnalité précédemment mentionnée.
-Un tri et un filtrage selon le genre des livres ont été implémentés.
-Une barre de recherche pour les utilisateurs a été ajoutée.
-Un filtre selon le nom d'un livre et selon le nom d'un auteur ont été ajouté.
+Tris: alphabétique pour livres/utilisateurs
+Filtres avec barre de recherche: livres/utilisateurs/auteurs
+Filtre avec choix multiples: livres (par genre) & auteurs (par nombre de livres écrits)
 
 Les base de données des utilisateurs et des livres ont été liées.
+Accès aux pages de détails individuelles des auteurs, livres et utilisateurs mais sans informations.
 
 ## Style de code
 Standard
@@ -35,10 +34,11 @@ Nous utilisons des bases de données pour lister les auteurs, utilisateurs, livr
 
 # Front end
 Nous pouvons afficher la listes des auteurs, livres et utilisateurs sur leur page globale respective. 
-Nous pouvons ajouter et supprimer des auteurs, livres et utilisateurs (une modale est utilisée pour le faire). 
-Une option pour filtrer des livres selon leur titre et leur genre a été implémentée.
-Nous pouvons rechercher les utilisateurs selon leur nom et prénom.
-
+Nous pouvons ajouter et supprimer des auteurs, livres et utilisateurs (une modale est utilisée pour le faire). Cela modifie la base de donnée en interne 
+Filtrage avec barres de recherches pour utilisateurs/livres/auteurs
+Filtre des livres par genre
+Filtre des auteurs par nombre de livres écrits
+Tri des livres par ordre alphabétique
 ## API
 Toutes les APIs peuvent être trouvées dans le dossier 'library-api'
 
@@ -62,6 +62,7 @@ Les différentes options sont expliquées ci-dessous:
 
 - Auteurs: la liste des auteurs apparaît et un bouton "Ajouter un auteur" se trouve en haut à droite. Si ce bouton est cliqué, une modale apparaît demandant diverses informations afin d'ajouter un auteur dans la base de données.
 Si on souhaite trouver un auteur particulier, une barre de recherche a été implémentée pour cette exacte fonction.
+On peut filtrer les auteurs selon le nombre de livres qu'ils ont écrit grâce à un menu défilant - pour que le filtre soit appliqué, il faut cliquer sur le bouton "Filter OFF/ON"
 
 - Livres: la liste des livres apparaît et un bouton "Ajouter un livre" se trouve en haut à droite. Si ce bouton est cliqué, une modale apparaît demandant diverses informations afin d'ajouter un livre dans la base de données.
 On peut trier les livres par ordre alphabétique selon leur titre, le nom et le prénom de leur auteur.
@@ -73,7 +74,7 @@ On peut filtrer les utilisateurs selon leur nom grâce à une barre de recherche
 ## Contributions
 
 Julien: Back-end (base de données)
-Pierre-Antoine: Mixte (Affichage livres/auteurs | Tri par genre des livres et debug de l'ESLint | Filtrer les auteurs/utilisateurs)
+Pierre-Antoine: Mixte (Affichage livres/auteurs | Tri par genre des livres et debug de l'ESLint | Filtrer les auteurs/utilisateurs/livres)
 Léo: Front-end (Menu + design du site)
 Saona: Documentation
 
