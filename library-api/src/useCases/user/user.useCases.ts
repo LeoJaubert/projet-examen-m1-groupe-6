@@ -36,7 +36,7 @@ export class UserUseCases {
    */
   public async create(
     input: CreateUserUseCasesInput,
-  ): Promise<PlainUserUseCasesOutput> {
+  ): Promise<UserUseCasesOutput> {
     return this.userRepository.createUser(input);
   }
 

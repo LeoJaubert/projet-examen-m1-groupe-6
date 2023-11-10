@@ -8,7 +8,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BookGenre } from './BookGenre';
+import { UserBook } from './UserBook';
 import { Author } from './Author';
+import { Genre } from './Genre';
 
 export type BookId = string & { __brand: 'Book' };
 
@@ -26,6 +28,11 @@ export class Book extends BaseEntity {
   @ManyToOne(() => Author, (author) => author.books, { onDelete: 'CASCADE' })
   author: Author;
 
+  genres: Genre[];
+
   @OneToMany(() => BookGenre, (bookGenre) => bookGenre.book)
   bookGenres: BookGenre[];
+
+  @OneToMany(() => UserBook, (userBook) => userBook.book)
+  userBooks: UserBook[];
 }

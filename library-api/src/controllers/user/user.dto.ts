@@ -1,4 +1,5 @@
 import { IsString } from '@nestjs/class-validator';
+import { Book } from 'library-api/src/entities';
 
 export class CreateUserDto {
   @IsString()
@@ -6,4 +7,6 @@ export class CreateUserDto {
 
   @IsString()
   lastname: string;
+
+  books: string[];
 }

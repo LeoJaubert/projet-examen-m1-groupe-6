@@ -26,7 +26,11 @@ export class UserRepository extends Repository<User> {
    * @returns Array of plain users
    */
   public async getAllPlain(): Promise<PlainUserRepositoryOutput[]> {
-    const users = await this.find({});
+    const users = await this.find({
+      relations: {
+        userBooks: { book: true },
+      },
+    });
 
     return users.map(adaptUserEntityToPlainUserModel);
   }
@@ -38,7 +42,12 @@ export class UserRepository extends Repository<User> {
    * @throws 404: user with this ID was not found
    */
   public async getById(id: UserId): Promise<UserRepositoryOutput> {
-    const user = await this.findOne({ where: { id } });
+    const user = await this.findOne({
+      relations: {
+        userBooks: { book: true },
+      },
+      where: { id },
+    });
 
     if (!user) {
       throw new NotFoundError(`User - '${id}'`);
@@ -55,10 +64,10 @@ export class UserRepository extends Repository<User> {
 
   public async createUser(
     input: CreateUserRepositoryInput,
-  ): Promise<PlainUserRepositoryOutput> {
+  ): Promise<UserRepositoryOutput> {
     const id = await this.dataSource.transaction(async (manager) => {
       const [newUser] = await manager.save<User>([
-        manager.create<User>(User, { ...input }),
+        manager.create<User>(User, { ...input, userBooks: undefined }),
       ]);
       if (!newUser) {
         throw new InternalServerError('An error occured creating new User');

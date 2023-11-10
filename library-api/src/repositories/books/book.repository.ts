@@ -32,7 +32,11 @@ export class BookRepository extends Repository<Book> {
    */
   public async getAllPlain(): Promise<PlainBookRepositoryOutput[]> {
     const books = await this.find({
-      relations: { bookGenres: { genre: true }, author: true },
+      relations: {
+        bookGenres: { genre: true },
+        userBooks: { user: true },
+        author: true,
+      },
     });
 
     return books.map(adaptBookEntityToPlainBookModel);
@@ -47,7 +51,11 @@ export class BookRepository extends Repository<Book> {
   public async getById(id: BookId): Promise<BookRepositoryOutput> {
     const book = await this.findOne({
       where: { id },
-      relations: { bookGenres: { genre: true }, author: true },
+      relations: {
+        bookGenres: { genre: true },
+        userBooks: { user: true },
+        author: true,
+      },
     });
 
     if (!book) {
@@ -72,6 +80,7 @@ export class BookRepository extends Repository<Book> {
             ...input,
             id: v4(),
             bookGenres: undefined,
+            userBooks: undefined,
             author: undefined,
           },
         ]),
