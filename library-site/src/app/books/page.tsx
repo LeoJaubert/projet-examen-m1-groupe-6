@@ -153,7 +153,12 @@ const BooksPage: FC = (): ReactElement => {
               <strong>Date d&apos;écriture:</strong>
               {` ${book.writtenOn}`}
             </p>
-            <a href={`http://localhost:3000/books/${book.id}`}>Details</a>
+            <a
+              href={`http://localhost:3000/books/${book.id}`}
+              className="underline"
+            >
+              Détails
+            </a>
           </div>
         ))}
       </div>

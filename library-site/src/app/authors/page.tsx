@@ -63,7 +63,12 @@ const AuthorsPage: FC = () => {
             <p className="text-lg font-semibold">
               {`${author.firstName} ${author.lastName}`}
             </p>
-            <a href={`http://localhost:3000/authors/${author.id}`}>Details</a>
+            <a
+              href={`http://localhost:3000/authors/${author.id}`}
+              className="underline"
+            >
+              Détails
+            </a>
           </div>
         ))}
       </div>
