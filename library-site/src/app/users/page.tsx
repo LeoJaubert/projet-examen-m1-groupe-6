@@ -36,9 +36,7 @@ const UsersPage: FC = () => {
         {users.map((user) => (
           <div key={user.id} className="bg-vertclair p-4 rounded-md shadow-md">
             <p className="text-lg font-semibold">
-              {user.firstname}
-              {' '}
-              {user.lastname}
+              {`${user.firstname} ${user.lastname}`}
             </p>
           </div>
         ))}

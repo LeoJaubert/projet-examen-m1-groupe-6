@@ -114,8 +114,7 @@ const BooksPage: FC = (): ReactElement => {
               className="bg-gray-300 text-gray-700 px-3 py-1 rounded-full"
               type="button"
             >
-              {type}
-              {' '}
+              {`${type} `}
               <span className="text-xs">X</span>
             </button>
           ))}
@@ -139,23 +138,19 @@ const BooksPage: FC = (): ReactElement => {
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Livres :</h1>
         {books.map((book) => (
-          <div key={book.id} className="bg-vertclair p-4 rounded-md shadow-md mb-4">
+          <div
+            key={book.id}
+            className="bg-vertclair p-4 rounded-md shadow-md mb-4"
+          >
             <p>
               <strong>Titre:</strong>
-              {' '}
-              {book.name}
-              {' '}
+              {` ${book.name} `}
               <br />
               <strong>Auteur:</strong>
-              {' '}
-              {book.author.firstName}
-              {' '}
-              {book.author.lastName}
-              {' '}
+              {` ${book.author.firstName} ${book.author.lastName} `}
               <br />
               <strong>Genre(s):</strong>
-              {' '}
-              {book.genres.join(', ')}
+              {` ${book.genres.join(', ')}`}
             </p>
           </div>
         ))}
