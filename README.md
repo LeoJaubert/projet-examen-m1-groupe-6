@@ -18,6 +18,9 @@ Dans un second temps, le back-end a été lié au front-end pour permettre d'aff
 Des modales ont été ajoutées à la suite pour permettre la fonctionnalité précédemment mentionnée.
 Un tri et un filtrage selon le genre des livres ont été implémentés.
 Une barre de recherche pour les utilisateurs a été ajoutée.
+Un filtre selon le nom d'un livre et selon le nom d'un auteur ont été ajouté.
+
+Les base de données des utilisateurs et des livres ont été liées.
 
 ## Style de code
 Standard
@@ -41,6 +44,7 @@ Toutes les APIs peuvent être trouvées dans le dossier 'library-api'
 
 ## Tests
 En back-end uniquement
+GetById & Create pour les utilisateurs, livres et auteurs
 
 ## Utilisation
 Lors de la connexion, on arrive sur la page d'accueil
@@ -57,16 +61,20 @@ Les différentes options sont expliquées ci-dessous:
 - Accueil: reviens au menu avec le texte d'accueil
 
 - Auteurs: la liste des auteurs apparaît et un bouton "Ajouter un auteur" se trouve en haut à droite. Si ce bouton est cliqué, une modale apparaît demandant diverses informations afin d'ajouter un auteur dans la base de données.
+Si on souhaite trouver un auteur particulier, une barre de recherche a été implémentée pour cette exacte fonction.
 
 - Livres: la liste des livres apparaît et un bouton "Ajouter un livre" se trouve en haut à droite. Si ce bouton est cliqué, une modale apparaît demandant diverses informations afin d'ajouter un livre dans la base de données.
+On peut trier les livres par ordre alphabétique selon leur titre, le nom et le prénom de leur auteur.
+On peut filtrer les livres selon leur nom grâce à une barre de recherche et selon leur genre grâce à un menu défilant - pour confirmer son choix, on doit cliquer sur le bouton "filtrer".
 
 - Utilisateurs: la liste des utilisateurs apparaît et un bouton "Ajouter un utilisateur" se trouve en haut à droite. Si ce bouton est cliqué, une modale apparaît demandant diverses informations afin d'ajouter un utilisateur dans la base de données.
+On peut filtrer les utilisateurs selon leur nom grâce à une barre de recherche.
 
 ## Contributions
 
 Julien: Back-end (base de données)
-Pierre-Antoine: Affichage livres/auteurs | Tri et filtrage par genre des livres et debug de l'ESLint
-Léo: Front-end (Menu + design)
+Pierre-Antoine: Mixte (Affichage livres/auteurs | Tri par genre des livres et debug de l'ESLint | Filtrer les auteurs/utilisateurs)
+Léo: Front-end (Menu + design du site)
 Saona: Documentation
 
 ## Credits
