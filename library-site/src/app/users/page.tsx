@@ -101,8 +101,11 @@ const UsersPage: FC = () => {
             <p className="text-lg font-semibold">
               {`${user.firstname} ${user.lastname}`}
             </p>
-            <a href={`http://localhost:3000/users/${user.id}`}
-              className="underline">Détails
+            <a
+              href={`http://localhost:3000/users/${user.id}`}
+              className="underline"
+            >
+              Détails
             </a>
           </div>
         ))}

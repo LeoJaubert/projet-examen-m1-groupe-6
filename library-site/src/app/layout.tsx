@@ -86,7 +86,7 @@ export const AddUser: React.FC = () => {
     };
 
     const response = await axios.post('http://localhost:3001/user', newUser);
-    closeModal
+    closeModal;
   };
 
   return (
@@ -110,7 +110,8 @@ export const AddUser: React.FC = () => {
           <div className={styles.form}>
             <div className={styles.formPart}>
               <p className={styles.label}>Prénom</p>
-              <input className={styles.input} 
+              <input
+                className={styles.input}
                 value={firstname}
                 onChange={handlefirstnameChange}
               />

@@ -16,10 +16,11 @@ const AuthorDetailsPage: FC = () => {
   return (
     <main className="p-8">
       <button
-        onClick={() => window.history.back()}
+        onClick={(): void => window.history.back()}
         className="absolute top-4 right-4 bg-bleu px-4 py-2 rounded-md"
+        type="button"
       >
-        Supprimer l'auteur
+        Supprimer l&apos;auteur
       </button>
       <h1 className="text-3xl font-bold mb-4">Détails de l&apos;auteur</h1>
 

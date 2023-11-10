@@ -26,8 +26,9 @@ const BooksDetailsPage: FC = () => {
   return (
     <main className="p-8">
       <button
-        onClick={() => window.history.back()}
+        onClick={(): void => window.history.back()}
         className="absolute top-4 right-4 bg-bleu px-4 py-2 rounded-md"
+        type="button"
       >
         Supprimer le livre
       </button>
@@ -40,22 +41,16 @@ const BooksDetailsPage: FC = () => {
           </h2>
           <p>
             <strong>Titre:</strong>
-            {' '}
-            {book?.name}
-            {' '}
+            {` ${book.name} `}
             <br />
-            <strong>Auteur:</strong>{' '}
-            {`${book?.author.firstName} ${book?.author.lastName}`}
-            {' '}
+            <strong>Auteur:</strong>
+            {` ${book.author.firstName} ${book.author.lastName} `}
             <br />
             <strong>Genre(s):</strong>
-            {' '}
-            {book?.genres.join(', ')}
-            {' '}
+            {` ${book.genres.join(', ')}`}
             <br />
             <strong>Date d&apos;écriture:</strong>
-            {' '}
-            {book?.writtenOn}
+            {` ${book.writtenOn}`}
           </p>
         </div>
       )}
