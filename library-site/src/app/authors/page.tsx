@@ -17,25 +17,33 @@ const AuthorsPage: FC = () => {
   }, []);
 
   return (
-    <main>
+    <main className="p-4">
       <MenuHamburger />
       <AddAuthor />
-      <input
-        type="text"
-        value={search}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setSearch(e.target.value);
-        }}
-        placeholder="Rechercher un auteur"
-        className="p-2 border border-gray-300 rounded-md"
-      />
-      <h1>Author</h1>
-      {authors.map((author) => (
-        <div key={author.id}>
-          {`${author.firstName} 
-          ${author.lastName}`}
-        </div>
-      ))}
+      <div className="mt-10">
+        <input
+          type="text"
+          value={search}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setSearch(e.target.value);
+          }}
+          placeholder="Rechercher un auteur"
+          className="p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <h1 className="text-2xl font-bold mt-8 mb-4">Auteurs :</h1>
+      <div className="grid grid-cols-1 gap-4">
+        {authors.map((author) => (
+          <div
+            key={author.id}
+            className="bg-vertclair p-4 rounded-md shadow-md"
+          >
+            <p className="text-lg font-semibold">
+              {`${author.firstName} ${author.lastName}`}
+            </p>
+          </div>
+        ))}
+      </div>
     </main>
   );
 };
