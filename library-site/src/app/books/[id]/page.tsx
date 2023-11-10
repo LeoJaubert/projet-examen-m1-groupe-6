@@ -25,13 +25,6 @@ const BooksDetailsPage: FC = () => {
 
   return (
     <main className="p-8">
-      <button
-        onClick={(): void => window.history.back()}
-        className="absolute top-4 right-4 bg-bleu px-4 py-2 rounded-md"
-        type="button"
-      >
-        Supprimer le livre
-      </button>
       <h1 className="text-3xl font-bold mb-4">Détails du livre</h1>
 
       {book && (
