@@ -36,7 +36,7 @@ export const Modal: FC<ModalProps> = ({
       <div className={styles.modalFooter}>
         {onSubmit ? (
           <button type="button" className="primary" onClick={onSubmit}>
-            Submit
+            Valider
           </button>
         ) : undefined}
       </div>

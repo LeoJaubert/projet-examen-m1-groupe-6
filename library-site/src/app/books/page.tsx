@@ -74,7 +74,7 @@ const BooksPage: FC = (): ReactElement => {
 
   return (
     <main>
-      <div className="flex justify-between items-center text-white p-4">
+      <div className="flex justify-between items-center p-4">
         <MenuHamburger />
         <AddBook />
       </div>

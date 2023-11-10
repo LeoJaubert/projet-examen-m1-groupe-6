@@ -9,18 +9,16 @@
   transform: translate(-50%, -50%);
   min-height: 300px;
   max-height: 50%;
-  background-color: #ADE1E5;
+  background-color: #79C7C5;
   display: flex;
   flex-direction: column;
 }
 
 .divider {
-  opacity: 0.2;
   margin: 0 .5rem;
 }
 
 .modalHeader {
-  color:#73AB84;
   flex-grow: 0;
   display: flex;
   flex-direction: row-reverse;
@@ -30,6 +28,8 @@
 
 .headerTitle {
   flex-grow: 1;
+  text-align: center;
+  font-size: large;
 }
 
 .modalBody {
@@ -40,7 +40,7 @@
 .modalFooter {
   flex-grow: 0;
   width: 100%;
-  padding: .5rem 1rem;
+  padding: 1rem 2rem;
   display: flex;
   flex-direction: row-reverse;
 }
