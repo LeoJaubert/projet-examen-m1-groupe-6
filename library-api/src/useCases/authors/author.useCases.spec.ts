@@ -1,3 +1,4 @@
+import { InternalServerError } from 'library-api/src/common/errors';
 import { authorFixture } from 'library-api/src/fixtures';
 import { AuthorRepository } from 'library-api/src/repositories';
 import { adaptAuthorEntityToPlainAuthorModel } from 'library-api/src/repositories/authors/author.utils';
@@ -45,6 +46,58 @@ describe('AuthorUseCases', () => {
       expect(getByIdSpy).toHaveBeenCalledWith(fixture.id);
 
       expect(result).toStrictEqual(fixture);
+    });
+  });
+  describe('create', () => {
+    it('should call repository function and return the created author', async () => {
+      const repository = {
+        create: jest.fn(),
+      } as unknown as AuthorRepository;
+
+      const useCases = new AuthorUseCases(repository);
+      const input = {
+        firstName: 'testfirstname',
+        lastName: 'testlastname',
+        photoUrl:'testphotoUrl',
+      };
+
+      const createdAuthorEntity = { ...input, id: 'id' };
+      const createdAuthorModel = adaptAuthorEntityToPlainAuthorModel(createdAuthorEntity);
+
+      const createAuthorSpy = jest
+        .spyOn(repository, 'createAuthor')
+        .mockResolvedValue(createdAuthorEntity);
+
+      const result = await useCases.create(input);
+
+      expect(createAuthorSpy).toHaveBeenCalledTimes(1);
+      expect(createAuthorSpy).toHaveBeenCalledWith(input);
+
+      expect(result).toStrictEqual(createdAuthorModel);
+    });
+
+    it('should handle repository error during author creation', async () => {
+      const repository = {
+        create: jest.fn().mockImplementationOnce(() => {
+          throw new Error('Repository error');
+        }),
+      } as unknown as AuthorRepository;
+
+      const useCases = new AuthorUseCases(repository);
+      const input = {
+        firstName: 'testfirstname',
+        lastName: 'testlastname',
+        photoUrl: 'testphotoUrl',
+      };
+
+      try {
+        await useCases.create(input);
+        // If the repository error occurs, the test should not reach here
+        expect(true).toBeFalsy();
+      } catch (err) {
+        expect(err).toBeInstanceOf(InternalServerError);
+        expect(err.message).toBe('An error occurred creating a new Author');
+      }
     });
   });
 });

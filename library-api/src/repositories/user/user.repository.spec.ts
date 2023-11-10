@@ -3,6 +3,7 @@ import { userFixture } from 'library-api/src/fixtures';
 import { DataSource } from 'typeorm';
 import { UserRepository } from './user.repository';
 import { adaptUserEntityToPlainUserModel } from './user.utils';
+import { InternalServerError } from 'library-api/src/common/errors';
 
 describe('UserRepository', () => {
   describe('getAllPlain', () => {
@@ -82,4 +83,62 @@ describe('UserRepository', () => {
       }
     });
   });
+  describe('createUser', () => {
+    it('should create a new user', async () => {
+      const dataSource = {
+        transaction: jest.fn(),
+        createEntityManager: jest.fn(),
+      } as unknown as DataSource;
+      const repository = newUserRepository(dataSource);
+
+      const input = {
+        firstname: 'testname',
+        lastname: 'testsurname',
+        
+      };
+
+      const saveSpy = jest
+        .spyOn(repository.manager, 'save')
+        .mockResolvedValue([{ ...input, id: 'generated_user_id' }]);
+
+      const result = await repository.createUser(input);
+
+      expect(dataSource.transaction).toHaveBeenCalledTimes(1);
+      expect(saveSpy).toHaveBeenCalledTimes(1);
+      expect(saveSpy).toHaveBeenCalledWith([
+        repository.manager.create(User, { ...input }),
+      ]);
+      expect(result).toStrictEqual(
+        adaptUserEntityToPlainUserModel({
+          ...input,
+          id: 'generated_user_id',
+        }),
+      );
+    });
+
+    it('should handle transaction failure', async () => {
+      const dataSource = {
+        transaction: jest.fn().mockImplementationOnce(() => {
+          throw new Error('Transaction failed');
+        }),
+        createEntityManager: jest.fn(),
+      } as unknown as DataSource;
+      const repository = new UserRepository(dataSource);
+
+      const input = {
+        firstname: 'testname',
+        lastname: 'testsurname',
+        
+      };
+
+      try {
+        await repository.createUser(input);
+
+        expect(true).toBeFalsy();
+      } catch (err) {
+        expect(dataSource.transaction).toHaveBeenCalledTimes(1);
+        expect(err).toBeInstanceOf(InternalServerError);
+        expect(err.message).toBe('An error occurred creating a new User');
+      }
+    });
 });

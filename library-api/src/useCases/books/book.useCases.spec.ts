@@ -4,6 +4,7 @@ import {
   adaptBookEntityToBookModel,
   adaptBookEntityToPlainBookModel,
 } from 'library-api/src/repositories/books/book.utils';
+import { InternalServerError } from 'library-api/src/common/errors';
 import { BookUseCases } from './book.useCases';
 
 describe('BookUseCases', () => {
@@ -46,6 +47,61 @@ describe('BookUseCases', () => {
       expect(getByIdSpy).toHaveBeenCalledWith(fixture.id);
 
       expect(result).toStrictEqual(fixture);
+    });
+  });
+
+  describe('create', () => {
+    it('should call repository function and return the created book', async () => {
+      const repository = {
+        createBook: jest.fn(),
+      } as unknown as BookRepository;
+
+      const useCases = new BookUseCases(repository);
+      const input = {
+        name: 'The Test Book',
+        authorId: 'authorId',
+        writtenOn: '2015',
+        genre: 'Fantasy',
+      };
+
+      const createdBookEntity = { ...input, id: 'generated_book_id' };
+      const createdBookModel = adaptBookEntityToBookModel(createdBookEntity);
+
+      const createBookSpy = jest
+        .spyOn(repository, 'createBook')
+        .mockResolvedValue(createdBookEntity);
+
+      const result = await useCases.create(input);
+
+      expect(createBookSpy).toHaveBeenCalledTimes(1);
+      expect(createBookSpy).toHaveBeenCalledWith(input);
+
+      expect(result).toStrictEqual(createdBookModel);
+    });
+
+    it('should handle repository error during book creation', async () => {
+      const repository = {
+        create: jest.fn().mockImplementationOnce(() => {
+          throw new Error('Repository error');
+        }),
+      } as unknown as BookRepository;
+
+      const useCases = new BookUseCases(repository);
+      const input = {
+        title: 'The Test Book',
+        authorId: 'authorId',
+        writtenOn: '2015',
+        genre: 'Fantasy',
+      };
+
+      try {
+        await useCases.create(input);
+
+        expect(true).toBeFalsy();
+      } catch (err) {
+        expect(err).toBeInstanceOf(InternalServerError);
+        expect(err.message).toBe('An error occurred creating a new Book');
+      }
     });
   });
 });
