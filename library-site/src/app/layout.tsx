@@ -132,6 +132,26 @@ export const AddUser: React.FC = () => {
 
 export const AddBook: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [name, setname] = useState('');
+  const [author, setauthor] = useState('');
+  const [writtenOn, setwrittenOn] = useState('');
+  const [genre, setgenre] = useState('');
+
+  const handlenameChange = (event) => {
+    setname(event.target.value);
+  };
+
+  const handleauthorChange = (event) => {
+    setauthor(event.target.value);
+  };
+
+  const handlewrittenOnChange = (event) => {
+    setwrittenOn(event.target.value);
+  };
+
+  const handlegenreChange = (event) => {
+    setgenre(event.target.value);
+  };
 
   const openModal = (): void => {
     setIsModalOpen(true);
@@ -139,6 +159,23 @@ export const AddBook: React.FC = () => {
 
   const closeModal = (): void => {
     setIsModalOpen(false);
+  };
+
+  const handleSubmit = async () => {
+    const [authorFirstName, authorLastName] = author.split(' ');
+
+    const newBook = {
+      name,
+      author: {
+        firstName: authorFirstName,
+        lastName: authorLastName,
+      },
+      writtenOn,
+      genre,
+    };
+
+    const response = await axios.post('http://localhost:3001/books', newBook);
+    closeModal();
   };
 
   return (
@@ -155,25 +192,47 @@ export const AddBook: React.FC = () => {
         <Modal
           isOpen={isModalOpen}
           onCancel={closeModal}
-          onSubmit={closeModal}
+          onChange={
+            (handlenameChange,
+            handleauthorChange,
+            handlewrittenOnChange,
+            handlegenreChange)
+          }
+          onSubmit={handleSubmit}
           title="Ajouter un livre"
         >
           <div className={styles.form}>
             <div className={styles.formPart}>
               <p className={styles.label}>Nom du livre</p>
-              <input className={styles.input} />
+              <input
+                className={styles.input}
+                value={name}
+                onChange={handlenameChange}
+              />
             </div>
             <div className={styles.formPart}>
               <p className={styles.label}>Auteur</p>
-              <input className={styles.input} />
-            </div>
-            <div className={styles.formPart}>
-              <p className={styles.label}>Genre(s)</p>
-              <input className={styles.input} />
+              <input
+                className={styles.input}
+                value={author}
+                onChange={handleauthorChange}
+              />
             </div>
             <div className={styles.formPart}>
               <p className={styles.label}>Date d&apos;écriture</p>
-              <input className={styles.input} />
+              <input
+                className={styles.input}
+                value={writtenOn}
+                onChange={handlewrittenOnChange}
+              />
+            </div>
+            <div className={styles.formPart}>
+              <p className={styles.label}>Genre</p>
+              <input
+                className={styles.input}
+                value={genre}
+                onChange={handlegenreChange}
+              />
             </div>
           </div>
         </Modal>
