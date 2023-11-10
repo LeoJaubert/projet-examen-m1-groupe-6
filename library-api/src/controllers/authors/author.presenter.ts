@@ -1,4 +1,4 @@
-import { AuthorId } from 'library-api/src/entities';
+import { AuthorId, Book } from 'library-api/src/entities';
 import { PlainAuthorModel } from 'library-api/src/models';
 
 export class PlainAuthorPresenter {
@@ -7,6 +7,8 @@ export class PlainAuthorPresenter {
   firstName: string;
 
   lastName: string;
+
+  books: Book[];
 
   private constructor(data: PlainAuthorPresenter) {
     Object.assign(this, data);
@@ -17,6 +19,7 @@ export class PlainAuthorPresenter {
       id: data.id,
       firstName: data.firstName,
       lastName: data.lastName,
+      books: data.books,
     });
   }
 }
