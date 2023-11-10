@@ -44,13 +44,13 @@ const BooksPage: FC = (): ReactElement => {
 
   // Code pour le tri
   const [bookSort, setBookSort] = useState<bookSortType>({
-    field: 'Nom:',
+    field: 'Titre:',
     direction: 'A->Z',
   });
 
   const bookSorts: bookSortType[] = [
-    { field: 'Nom:', direction: 'A->Z' },
-    { field: 'Nom:', direction: 'Z->A' },
+    { field: 'Titre:', direction: 'A->Z' },
+    { field: 'Titre:', direction: 'Z->A' },
     { field: 'Prénom auteur:', direction: 'A->Z' },
     { field: 'Prénom auteur:', direction: 'Z->A' },
     { field: 'Nom auteur:', direction: 'A->Z' },
@@ -126,9 +126,7 @@ const BooksPage: FC = (): ReactElement => {
             onClick={(): void => setBookSort(currentSort)}
             disabled={compareSort(currentSort, bookSort)}
             className={`bg-gray-300 text-gray-700 px-3 py-1 rounded-md mt-4 ${
-              compareSort(currentSort, bookSort)
-                ? 'opacity-50 cursor-not-allowed'
-                : ''
+              compareSort(currentSort, bookSort) ? '' : ''
             }`}
           >
             {`${currentSort.field} ${currentSort.direction}`}
@@ -151,6 +149,9 @@ const BooksPage: FC = (): ReactElement => {
               <br />
               <strong>Genre(s):</strong>
               {` ${book.genres.join(', ')}`}
+              <br />
+              <strong>Date d&apos;écriture:</strong>
+              {` ${book.writtenOn}`}
             </p>
           </div>
         ))}

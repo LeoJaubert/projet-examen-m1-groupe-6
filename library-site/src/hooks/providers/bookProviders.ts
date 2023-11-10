@@ -23,7 +23,7 @@ export const useListBooks = (input?: ListBooksInput): UseListBooksProvider => {
       let val2;
 
       switch (input?.bookSort?.field) {
-        case 'Nom:':
+        case 'Titre:':
           val1 = b1.name;
           val2 = b2.name;
           break;
