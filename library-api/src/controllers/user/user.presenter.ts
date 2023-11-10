@@ -1,4 +1,4 @@
-import { Book, UserId } from 'library-api/src/entities';
+import { UserId } from 'library-api/src/entities';
 import { UserModel, PlainUserModel } from 'library-api/src/models';
 
 export class PlainUserPresenter {

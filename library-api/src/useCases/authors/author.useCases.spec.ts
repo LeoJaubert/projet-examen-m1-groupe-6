@@ -58,7 +58,7 @@ describe('AuthorUseCases', () => {
       const input = {
         firstName: 'testfirstname',
         lastName: 'testlastname',
-        photoUrl:'testphotoUrl',
+        photoUrl: 'testphotoUrl',
       };
 
       const createdAuthorEntity = { ...input, id: 'id' };

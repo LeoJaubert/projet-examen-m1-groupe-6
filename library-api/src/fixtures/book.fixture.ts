@@ -8,4 +8,4 @@ export const bookFixture = (): Book => ({
       id: faker.string.uuid() as AuthorId,
     },
     writtenOn: faker.date,
-}) as unknown as Book;
+  }) as unknown as Book;
